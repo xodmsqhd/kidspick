@@ -6,9 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KidsPick - 우리 아이 안심 유튜브 큐레이터</title>
     <script>
-      // 파일 탐색기에서 index.html을 더블클릭했을 때 -> 단독 실행 파일로 즉시 연결
+      // 1. 파일 탐색기에서 index.html을 더블클릭했을 때 -> 단독 실행 파일로 즉시 연결
       if (window.location.protocol === 'file:' && !window.location.pathname.includes('KidsPick_바로실행')) {
         window.location.replace('./KidsPick_바로실행.html');
+      }
+      // 2. GitHub Pages (방법 2: root 배포)에서 접속 시 -> 빌드된 dist 폴더로 즉시 자동 연결
+      if (window.location.protocol !== 'file:' && !window.location.pathname.includes('/dist') && !window.location.port) {
+        window.location.replace('./dist/');
       }
     </script>
   </head>

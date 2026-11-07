@@ -94,7 +94,7 @@ function singleFileHtmlPlugin(): Plugin {
         fs.writeFileSync(path.resolve(__dirname, 'KidsPick_바로실행.html'), localHtml, 'utf-8');
 
         console.log('----------------------------------------------------');
-        console.log('✅ [KidsPick] 배포용 빌드 완료 (base: /kidspick/):');
+        console.log('✅ [KidsPick] 배포용 빌드 완료 (base: ./):');
         console.log('   📁 dist/ (GitHub Pages 및 배포용 전체 산출물 포함)');
         console.log('   └─ 📄 index.html');
         console.log('   └─ 📁 assets/');
@@ -141,6 +141,6 @@ function backendApiProxyPlugin(): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/kidspick/',
+  base: './',
   plugins: [react(), tailwindcss(), backendApiProxyPlugin(), singleFileHtmlPlugin()],
 });
