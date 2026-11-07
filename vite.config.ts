@@ -52,10 +52,7 @@ function singleFileHtmlPlugin(): Plugin {
           ''
         );
 
-        // Clean up redundant assets folder inside dist since JS and CSS are already inlined
-        if (fs.existsSync(assetsDir)) {
-          fs.rmSync(assetsDir, { recursive: true, force: true });
-        }
+        // Preserve assets folder in dist so all /kidspick/assets/* requests succeed without 404
 
         // Load API keys from .env
         const env = loadServerEnv();
@@ -73,7 +70,7 @@ function singleFileHtmlPlugin(): Plugin {
         // Write to dist/index.html
         fs.writeFileSync(indexPath, githubHtml, 'utf-8');
 
-        // Create dedicated clean deploy folder: "깃허브_업로드파일" (Only 3 files!)
+        // Create dedicated clean deploy folder: "깃허브_업로드파일"
         const deployDir = path.resolve(__dirname, '깃허브_업로드파일');
         if (!fs.existsSync(deployDir)) {
           fs.mkdirSync(deployDir, { recursive: true });
@@ -97,12 +94,11 @@ function singleFileHtmlPlugin(): Plugin {
         fs.writeFileSync(path.resolve(__dirname, 'KidsPick_바로실행.html'), localHtml, 'utf-8');
 
         console.log('----------------------------------------------------');
-        console.log('✅ [KidsPick] 배포용 파일 준비 완료:');
-        console.log('   📁 dist/ (또는 📁 깃허브_업로드파일/)');
-        console.log('   └─ 📄 index.html  (단독 실행 + 안전한 암호화 키 연동)');
-        console.log('   └─ 📄 favicon.svg (아이콘)');
-        console.log('   └─ 📄 icons.svg   (아이콘)');
-        console.log('   ※ 총 파일 3개뿐이므로 깃허브 웹에서 바로 드래그 업로드 가능!');
+        console.log('✅ [KidsPick] 배포용 빌드 완료 (base: /kidspick/):');
+        console.log('   📁 dist/ (GitHub Pages 및 배포용 전체 산출물 포함)');
+        console.log('   └─ 📄 index.html');
+        console.log('   └─ 📁 assets/');
+        console.log('   └─ 📄 favicon.svg & icons.svg');
         console.log('----------------------------------------------------');
       } catch (e) {
         console.warn('[SingleFilePlugin] Warning:', e);
@@ -145,6 +141,6 @@ function backendApiProxyPlugin(): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/kidspick/',
   plugins: [react(), tailwindcss(), backendApiProxyPlugin(), singleFileHtmlPlugin()],
 });
